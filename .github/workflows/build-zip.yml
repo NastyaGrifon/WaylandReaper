@@ -1,0 +1,49 @@
+name: Build extension zip
+
+# Packs the installable GNOME Shell extension bundle and attaches it to:
+#  - every push to main (rolling "latest" artifact)
+#  - every tag push v* (GitHub Release with the zip attached)
+# Zip layout matches what `gnome-extensions install` / Extension Manager
+# expect: metadata.json + extension.js (+ prefs.js, compiled schemas/) at root.
+# Runs on alpine (~50MB image): needs only `zip` and `glib` packages.
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+
+permissions:
+  contents: write   # needed only for the release step on tags
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: alpine:3.20
+    steps:
+      - name: Install build deps (zip + glib-compile-schemas)
+        run: apk add --no-cache zip glib nodejs
+
+      - uses: actions/checkout@v4
+
+      - name: Compile GSettings schema
+        run: glib-compile-schemas extension/schemas/
+
+      - name: Pack extension zip
+        run: |
+          cd extension
+          zip -r "../WaylandReaper-${GITHUB_REF_NAME}.zip" \
+              metadata.json extension.js prefs.js schemas/
+
+      - name: Upload artifact (every build)
+        uses: actions/upload-artifact@v4
+        with:
+          name: waylandreaper-zip
+          path: WaylandReaper-*.zip
+
+      - name: Attach to GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: WaylandReaper-*.zip
+          generate_release_notes: true
