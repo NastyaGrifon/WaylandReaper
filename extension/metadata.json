@@ -1,0 +1,22 @@
+{
+  "name": "WaylandReaper",
+  "description": "AI GENERATED CODE — standalone force-close: hotkey kills the focused window's process (SIGTERM, grace, SIGKILL). No script, no third-party extension. Whitelist + grace period via GSettings.",
+  "uuid": "waylandreaper-backend@nastyagrifon.me",
+  "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
+    "50"
+  ],
+  "version": 2,
+  "url": "https://github.com/nastyagrifon/WaylandReaper",
+  "settings-schema": "org.gnome.shell.extensions.waylandreaper-backend",
+  "author": "Nastya Grifon (AI-assisted, see README provenance)",
+  "original-author": "Hendrik G. Seliger (github@hseliger.eu)",
+  "contributors": [
+    "ickyicky (original Window Calls concept)",
+    "dev-muhammad-adel (GNOME 49+ maximized-flag rebuild)"
+  ]
+}

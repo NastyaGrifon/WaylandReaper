@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema id="org.gnome.shell.extensions.waylandreaper-backend" path="/org/gnome/shell/extensions/waylandreaper-backend/">
+    <key type="as" name="whitelist">
+      <default>['gnome-shell', 'ddterm', 'yakuake', 'guake', 'kitty', 'alacritty']</default>
+      <summary>Process names never to kill</summary>
+      <description>Exact comm names (/proc/PID/comm) of processes the reaper must never terminate: the GNOME session itself and dropdown/terminal processes.</description>
+    </key>
+    <key type="i" name="grace-period-ms">
+      <default>500</default>
+      <range min="100" max="5000"/>
+      <summary>SIGTERM grace period in ms</summary>
+      <description>How long to wait between SIGTERM and SIGKILL when force-closing a window's process.</description>
+    </key>
+    <key type="b" name="show-notifications">
+      <default>false</default>
+      <summary>Show a notification on every kill</summary>
+      <description>When enabled, WaylandReaper sends a desktop notification each time it terminates a process or skips a whitelisted one. Off by default.</description>
+    </key>
+    <key type="as" name="kill-focused-window">
+      <default><![CDATA[['<Super>q']]]></default>
+      <summary>Kill focused window (primary hotkey)</summary>
+      <description>Accelerator for terminating the focused window's process. Empty = disabled.</description>
+    </key>
+    <key type="as" name="kill-focused-window-alt">
+      <default><![CDATA[[]]]></default>
+      <summary>Kill focused window (secondary hotkey)</summary>
+      <description>Second accelerator, same action. Empty string list = disabled.</description>
+    </key>
+  </schema>
+</schemalist>
